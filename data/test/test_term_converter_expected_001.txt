@@ -1,0 +1,15 @@
+start#0 start
+start start
+start A
+hello A B start
+hello A b#0 b#1 a#0
+yolo hello b#2 C
+yolo c#0 B
+A a
+B b
+C c
+b#0 b
+b#1 b
+a#0 a
+b#2 b
+c#0 c

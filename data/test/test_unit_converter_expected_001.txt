@@ -1,0 +1,9 @@
+start
+hello A C
+hello A A
+A     a
+A     b
+C     c
+hello c
+hello a
+hello b

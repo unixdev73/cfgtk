@@ -1,0 +1,4 @@
+option             source-tok --source|-s
+option length-tok --length|-l
+flag help-tok --help|-h
+flag pin-tok --pin|-p

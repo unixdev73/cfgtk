@@ -1,0 +1,4 @@
+start#0 start
+start A B start
+A a
+B b

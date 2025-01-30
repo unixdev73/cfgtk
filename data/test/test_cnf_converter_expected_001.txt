@@ -1,0 +1,21 @@
+start         password-arg password-args
+start         
+start         charset-tok#0 free-value
+start         augment-tok#0 free-value
+start         length-tok#0 positive-int
+password-args password-arg password-args
+password-args charset-tok#0 free-value
+password-args augment-tok#0 free-value
+password-args length-tok#0 positive-int
+password-arg  charset-tok#0 free-value
+password-arg  augment-tok#0 free-value
+password-arg  length-tok#0 positive-int
+charset-arg   charset-tok#0 free-value
+augment-arg   augment-tok#0 free-value
+length-arg    length-tok#0 positive-int
+positive-int  positive-int-tok
+free-value    positive-int-tok
+free-value    free-value-tok
+charset-tok#0 charset-tok
+augment-tok#0 augment-tok
+length-tok#0  length-tok
