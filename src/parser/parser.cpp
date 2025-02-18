@@ -638,6 +638,52 @@ void to_cnf_unit(grammar_list_t &glist) {
       ++r;
   }
 }
+
+// Eliminate rules that only have one right hand side that is not unique;
+// then replace the occurrence of their left hand sides with the first rule
+// with the same right hand side
+void to_cnf_reduce(grammar_list_t &glist) {
+  bool removed{false};
+  do {
+    removed = false;
+
+    std::unordered_map<std::string, std::size_t> occmap{};
+    for (auto it = glist.begin(); it != glist.end(); ++it) {
+      if (!occmap.contains((*it)->lhs))
+        occmap.emplace((*it)->lhs, 1);
+      else
+        ++occmap.at((*it)->lhs);
+    }
+
+    std::list<std::list<std::unique_ptr<rule>>::iterator> ids{};
+    std::unordered_map<std::string, std::string> replace{};
+    for (auto it = glist.begin(); it != glist.end();) {
+      if ((*it)->rhs.size() && occmap.at((*it)->lhs) == 1) {
+        auto it2 = ids.begin();
+        for (; it2 != ids.end(); ++it2)
+          if ((*(*it2))->rhs == (*it)->rhs &&
+              occmap.at((*it2)->get()->lhs) == 1)
+            break;
+        if (it2 == ids.end())
+          ids.push_back(it);
+        else if (it != *it2) {
+          replace.emplace((*it)->lhs, (*(*it2))->lhs);
+          it = glist.erase(it);
+          removed = true;
+          continue;
+        }
+      }
+      ++it;
+    }
+
+    if (replace.size()) {
+      for (auto it = glist.begin(); it != glist.end(); ++it)
+        for (auto &s : (*it)->rhs)
+          if (replace.contains(s))
+            s = replace.at(s);
+    }
+  } while (removed);
+}
 } // namespace cfg
 
 namespace {
@@ -689,6 +735,8 @@ result to_cnf(const grammar_t *input, grammar_t *out, const cnf_info *info) {
     to_cnf_unit(g);
   if (bool(info->filter & cnf_filter::unique2))
     make_unique(g);
+  if (bool(info->filter & cnf_filter::reduce))
+    to_cnf_reduce(g);
   if (bool(info->filter & cnf_filter::group))
     group_rules(g);
 

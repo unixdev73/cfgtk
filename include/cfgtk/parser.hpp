@@ -117,7 +117,8 @@ enum class cnf_filter : unsigned {
   unique2 = 1 << 7,
   group = 1 << 8,
   random = 1 << 9,
-  prune = 1 << 10
+  prune = 1 << 10,
+  reduce = 1 << 11
 };
 
 inline constexpr cnf_filter operator|(cnf_filter a, cnf_filter b) {
@@ -134,7 +135,8 @@ struct cnf_info {
   cnf_filter filter{cnf_filter::unique0 | cnf_filter::start | cnf_filter::term |
                     cnf_filter::bin | cnf_filter::del | cnf_filter::unique1 |
                     cnf_filter::unit | cnf_filter::unique2 | cnf_filter::group |
-                    cnf_filter::random | cnf_filter::prune};
+                    cnf_filter::random | cnf_filter::prune |
+                    cnf_filter::reduce};
 };
 
 result to_cnf(const grammar_t *input, grammar_t *out, const cnf_info *);

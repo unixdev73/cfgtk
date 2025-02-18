@@ -88,4 +88,13 @@ if (PARSER_TESTS_ENABLED)
 		"${TEST_DATA_DIR}/test_cnf_converter_expected_001.txt"
 		"${TEST_DATA_DIR}/test_cnf_converter_input_001.txt"
 	)
+
+	add_executable(test_reduce_converter test/reduce_converter.cpp)
+	# Takes an expected output grammar file, an input grammar file,
+	# and checks if after converting the input to CNF the two grammars match
+	target_link_libraries(test_reduce_converter PRIVATE cfgtk_parser)
+	add_test(NAME conversion_to_cnf_reduce_test_001 COMMAND test_reduce_converter
+		"${TEST_DATA_DIR}/test_reduce_converter_expected_001.txt"
+		"${TEST_DATA_DIR}/test_reduce_converter_input_001.txt"
+	)
 endif()

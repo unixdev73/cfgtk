@@ -1,0 +1,10 @@
+A
+B X1 X2
+C X1 X2
+C X3 X2
+C X4
+D X3
+E X3
+F E
+G X1 X2
+H D G
